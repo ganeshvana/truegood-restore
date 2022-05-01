@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_mobile_ref_readonly" model="ir.ui.view">
+        <field name="name">partner.form.mobile_ref.readonly.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <xpath expr="//field[@name='ref']" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="before">
+                <field name="delivery_address_type" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="mobile_ref" readonly="1" groups="base.group_no_one"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

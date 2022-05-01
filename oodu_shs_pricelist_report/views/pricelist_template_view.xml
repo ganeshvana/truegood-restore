@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_pricelist_doc">
+    <t t-call="web.external_layout">
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})" />
+      
+        <div class="page">
+            <!-- <div class="row"> -->
+               <div class="col-12">
+                   <center>
+                       <span> <b>Pricelist Report </b></span>
+                    </center>
+               </div>
+                <table class="table table-sm" t-if="doc.move_ids_without_package">
+               
+                <thead>
+                    <tr>
+                        <th>
+                            <strong><span><center>Product</center></span></strong>
+                        </th>
+                        <th>
+                            <strong><span><center>Price</center></span></strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.move_ids_without_package" t-as="line">
+                        <t t-foreach="doc.pricelist_id.item_ids" t-as="pricelist_line">
+                            <t t-if="line.product_id.name == pricelist_line.product_tmpl_id.name">
+
+                            <tr>
+                                <td>
+                                        <span t-field="pricelist_line.product_tmpl_id"/>
+
+                                </td>
+                                <td>
+                                        <span t-field="pricelist_line.fixed_price"/>
+
+                                </td>
+
+                            </tr>
+                            </t>
+
+                        </t>
+                    </t>
+
+
+
+
+                </tbody>
+            </table>
+           <!-- </div> -->
+          
+        </div>
+    </t>
+</template>
+
+
+<template id="report_pricelist">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="oodu_shs_pricelist_report.report_pricelist_doc" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

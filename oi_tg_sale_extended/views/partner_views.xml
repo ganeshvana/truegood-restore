@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">view.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='city']" position="before">
+                <field name="street"/>
+                <field name="street2"/>
+
+            </xpath> 
+            <xpath expr="//field[@name='country_id']" position="before">
+                <field name="zip"/>
+            </xpath>
+          
+        </field>
+    </record>
+    
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="customer_type_id"/>
+                <field name="customer_source_id"/>
+            </xpath>             
+        </field>
+    </record>
+
+
+    <record id="partner_kanban_view_inherit_view" model="ir.ui.view">
+        <field name="name">Partner Kanban Inherit View</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details d-flex flex-column']" position="replace">
+            <div class="oe_kanban_details d-flex flex-column">
+                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value"><field name="function"/></li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value"><field name="function"/> at <field name="parent_id"/></li>
+                                        <li t-if="record.street.raw_value or record.street2.raw_value">
+                                            <t t-if="record.street.raw_value"><field name="street"/><t t-if="record.street2.raw_value">, </t></t>
+                                            <t t-if="record.street2.raw_value"><field name="street2"/></t>
+                                        </li>
+                                        <li t-if="record.city.raw_value or record.country_id.raw_value">
+                                            <t t-if="record.city.raw_value"><field name="city"/><t t-if="record.country_id.raw_value">, </t></t>
+                                            <t t-if="record.country_id.raw_value"><field name="country_id"/><t t-if="record.zip.raw_value">- </t></t>
+                                            <t t-if="record.zip.raw_value"><field name="zip"/></t>
+
+                                        </li>
+                                        <li t-if="record.email.raw_value" class="o_text_overflow"><field name="email"/></li>
+                                    </ul>
+                                    <div class="o_row">
+                                        <span class="oe_kanban_partner_links"/>
+                                    </div>
+                                </div>
+            </xpath>
+        </field>
+    </record>
+    
+    
+    <record id="view_order_tree_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">            
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_ref"/>
+            </xpath>
+            <field name="commitment_date" position="replace">
+                <field name="commitment_date" string="Planned Delivery Date" optional="hide"/>
+            </field>
+             <field name="commitment_date" position="after">
+                <field name="actual_delivery_date" string="Actual Delivery Date" optional="hide"/>
+            </field>          
+        </field>
+    </record>
+    
+    <record id="view_order_tree_inherit23" model="ir.ui.view">
+        <field name="name">view.sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">            
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_ref"/>
+            </xpath>
+            <field name="commitment_date" position="replace">
+                <field name="commitment_date" string="Planned Delivery Date" optional="hide"/>
+            </field>
+             <field name="commitment_date" position="after">
+                <field name="actual_delivery_date" string="Actual Delivery Date" optional="hide"/>
+            </field>          
+        </field>
+    </record>
+    
+    <record id="view_order_form_inherit11" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">   
+        	<xpath expr="//field[@name='payment_term_id']" position="after">
+        		<field name="customer_ref"/>
+        	</xpath>      
+        	<xpath expr="//group[@name='sale_shipping']" position="replace">
+                <group name="sale_shipping">
+                    <label for="commitment_date" string="Planned Delivery Date"/>
+                    <div name="commitment_date_div" class="o_row">
+                          <field name="commitment_date" required="1"/>
+                        <span name="expected_date_span" class="text-muted">Expected: <field name="expected_date" widget="date"/></span>
+                    </div>
+                    <label for="actual_delivery_date" string="Actual Delivery Date"/>
+                    <div name="act_commitment_date_div" class="o_row">
+                          <field name="actual_delivery_date"/>
+                    </div>
+                </group>
+            </xpath>           
+                    
+        </field>
+    </record>
+    
+    <record id="view_sale_report_pivot11" model="ir.ui.view">
+        <field name="name">sale.pivot.inherit</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="/pivot/field[@name='price_subtotal']" position="after">
+                <field name="standard_price" type="measure"/>
+            </xpath>                
+        </field>
+    </record>
+        
+    <record id="view_order_product_search11" model="ir.ui.view">
+        <field name="name">sale.search.inherit</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="/search/filter[@name='filter_date']" position="after">
+                
+                <filter name="today" string="Today " domain="[('date','&lt;=', (datetime.date.today()).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today()).strftime('%Y-%m-%d'))]"/>
+            </xpath>                
+        </field>
+    </record>
+    
+    <record id="customer_type_tree_view" model="ir.ui.view">
+		<field name="name">customer.type.tree</field>
+		<field name="model">customer.type</field>
+		<field name="arch" type="xml">
+			<tree string="name">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="customer_type_form_view" model="ir.ui.view">
+		<field name="name">customer.type.form</field>
+		<field name="model">customer.type</field>
+		<field name="arch" type="xml">
+			<form string="name">
+				<sheet>
+					<group name="trademark">
+						<group>
+							<field name="name" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_customer_type" model="ir.actions.act_window">
+		<field name="name">Customer Type</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="customer_type_menu_sale" name="Customer Type"
+		sequence="13" parent="sale.menu_sale_config" action="action_customer_type"/>
+	
+	<record id="customer_source_tree_view" model="ir.ui.view">
+		<field name="name">customer.source.tree</field>
+		<field name="model">customer.source</field>
+		<field name="arch" type="xml">
+			<tree string="name">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="customer_source_form_view" model="ir.ui.view">
+		<field name="name">customer.source.form</field>
+		<field name="model">customer.source</field>
+		<field name="arch" type="xml">
+			<form string="name">
+				<sheet>
+					<group name="trademark">
+						<group>
+							<field name="name" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_customer_source" model="ir.actions.act_window">
+		<field name="name">Customer Source</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.source</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="customer_source_menu_sale" name="Customer Source"
+		sequence="14" parent="sale.menu_sale_config" action="action_customer_source"/>
+		
+	<record id="product_template_form_weight_inherit" model="ir.ui.view">
+            <field name="name">product.template.common.form.inherit.weight</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="product_weight"/>
+                </xpath>
+            </field>
+        </record>
+
+   
+
+</odoo>

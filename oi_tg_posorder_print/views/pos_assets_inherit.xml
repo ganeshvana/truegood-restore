@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+<template id="assets_backend" name="oi_tg_posorder_print assets" inherit_id="web.assets_backend">
+
+    <xpath expr="." position="inside">
+
+        <link rel="stylesheet" href="/oi_tg_posorder_print/static/src/css/pos_receipts.css"/>
+
+    </xpath>
+
+</template>
+
+
+<template id="assets_frontend" name="oi_tg_posorder_print assets front" inherit_id="web.assets_frontend">
+
+    <xpath expr="." position="inside">
+
+        <link rel="stylesheet" href="/oi_tg_posorder_print/static/src/css/pos_receipts.css"/>
+
+    </xpath>
+
+</template>
+
+<template id="assets" inherit_id="point_of_sale.assets">
+
+    <xpath expr="." position="inside">
+
+        <link rel="stylesheet" href="/oi_tg_posorder_print/static/src/css/pos_receipts.css"/>
+
+
+    </xpath>
+
+</template>
+
+</odoo>

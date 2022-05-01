@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>	
+    <record id="group_product_create" model="res.groups">
+        <field name="name">Product Creation</field>
+    </record>
+    <record id="group_run_schedular" model="res.groups">
+        <field name="name">Run Scheduler</field>
+    </record>
+</odoo>

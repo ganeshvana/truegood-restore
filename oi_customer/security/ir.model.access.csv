@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_keyword,product_keyword,model_product_keyword,,1,1,1,1
+access_app_category,app_category,model_app_category,,1,1,1,1
+access_app_subcategory,app_subcategory,model_app_subcategory,,1,1,1,1
+access_oi_api_tracker,oi_api_tracker,model_oi_api_tracker,,1,1,1,1

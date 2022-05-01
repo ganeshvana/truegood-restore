@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_move_operations_view_inherits" model="ir.ui.view">
+        <field name="name">stock.picking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//field[@name='name']" position="replace">
+                <field name="name"  attrs="{'invisible': [('state', 'in', ['draft','waiting','assigned', 'confirmed'])]}" />
+            </xpath> -->
+            <xpath expr="//page[4]//field[@name='user_id']" position="before">
+                <field name="grn_seq"/>
+            </xpath>   
+        </field>
+    </record>
+
+    <record id="view_vpicktree_inherits" model="ir.ui.view">
+        <field name="name">stock.picking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="grn_seq" decoration-bf="1" />
+            </xpath>   
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search_inherits" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <search string="Picking Lists">
+                <field name="grn_seq" string="GRN Sequence"/>
+            </search>
+        </field>
+    </record>
+
+  
+    <record id="seq_line" model="ir.sequence">
+         <field name="name">GRN Sequence</field>
+         <field name="code">grn.sequence</field>            
+         <field name="padding">3</field>
+         <field name="prefix">GRN</field>
+         <field name="number_increment">1</field>
+         <field name="number_next">1</field>
+    </record> 
+
+   
+</odoo>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+   <record id="view_psale_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="date_order" position="after">
+                <field name="area" string="Area"/>
+            </field>            
+        </field>
+    </record>
+
+    <record id="sale_list" model="ir.ui.view">
+        <field name="name">sale.order.inheritedlist</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="area" string="Area"/>
+           </field>
+        </field>
+    </record>
+
+    <record id="sale_filter" model="ir.ui.view">
+        <field name="name">sale.order.inheritedfilter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <filter name="to_invoice" position="after">
+                <filter name="area" string="Area" domain="[('area','!=','')]"/>
+           </filter>
+        </field>
+    </record>
+
+    <record id="sale_filtering" model="ir.ui.view">
+        <field name="name">sale.order.inheritedgroup</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+           <xpath expr="//search/group/filter[@name='customer']"  position="after">
+                <filter name="area" string="Area" context="{'group_by':'area'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="acct_form_inherit" model="ir.ui.view">
+        <field name="name">acctform.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="area" string="Area"/>
+            </field>            
+        </field>
+    </record>
+
+    <record id="acct_list_inherit" model="ir.ui.view">
+        <field name="name">acctlist.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="area" string="Area"/>
+            </field>            
+        </field>
+    </record>
+
+    <record id="accont_filter" model="ir.ui.view">
+        <field name="name">account.inheritedfilter</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <filter name="draft" position="after">
+                <filter name="area" string="Area" domain="[('area','!=','')]"/>
+           </filter>
+        </field>
+    </record>
+
+    <record id="acc_filtering" model="ir.ui.view">
+        <field name="name">acc.order.inheritedgroup</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+           <xpath expr="//search/group/filter[@name='status']"  position="after">
+                <filter name="area" string="Area" context="{'group_by':'area'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                    <field name="pincode_id" string="pincode"/>
+                    <field name="area"/>
+
+            </xpath>  
+                    
+        </field>
+    </record>
+
+    <record id="area_group_tree_view" model="ir.ui.view">
+        <field name="name">area.group.tree</field>
+        <field name="model">area.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="pincode"/>
+                <field name="area"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="area_group_form_view" model="ir.ui.view">
+        <field name="name">area.group.form</field>
+        <field name="model">area.group</field>
+        <field name="arch" type="xml">
+            <form string="name">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="pincode"/>
+                        </group>
+                        <group>
+                            <field name="area"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_area_group" model="ir.actions.act_window">
+        <field name="name">Area Group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">area.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_area_group" name="Area Group"
+        sequence="1" parent="sale.menu_sale_config" action="action_area_group"/>
+
+
+</odoo>
